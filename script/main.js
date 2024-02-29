@@ -145,7 +145,7 @@ const displaySingleCardDetails = (singleTool) => {
           .join("")}
         </ul>
 
-        <div class="flex justify-between gap-6">
+        <div class="flex flex-col md:flex-row justify-between gap-6">
           <ul class="list-disc list-inside">
             <h3 class="font-bold text-xl mb-4">Features</h3>
             ${setFeaturesItem(features)}
