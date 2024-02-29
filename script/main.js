@@ -106,7 +106,7 @@ const setColorByIndex = (index) => {
 const setFeaturesItem = (features) => {
   let result = "";
   for (let feature in features) {
-    result += `<li>${features[feature].feature_name}</li>`;
+    result += `<li class="text-sm">${features[feature].feature_name}</li>`;
   }
   return result;
 };
@@ -117,8 +117,12 @@ const displaySingleCardDetails = (singleTool) => {
     features,
     integrations,
     image_link,
+    input_output_examples: iOExamples,
     accuracy: { score, description: accuracyDeascription },
   } = singleTool;
+
+  // input output example:
+  const randomNumber = Math.round(Math.random() * 1);
 
   const modalContainer = document.getElementById("modal_content");
 
@@ -128,15 +132,15 @@ const displaySingleCardDetails = (singleTool) => {
       <!-- div left -->
       <div class="border-red-400 border-2 p-6 rounded-xl flex-1 bg-[#fef6f6] space-y-4">
         <h3 class="text-base font-bold">${description}</h3>
-        <ul class="flex items-center gap-4">
+        <ul class="flex flex-col lg:flex-row items-center gap-4">
         ${pricing
           .map(
             (item, index) =>
               `<li class="bg-white ${setColorByIndex(
                 index
-              )} p-5 rounded-xl font-semibold text-base text-center"> ${
-                item?.price
-              } <br/> ${item?.plan} </li>`
+              )} p-5 rounded-xl font-semibold text-base text-center"> 
+                ${item?.price} 
+              <br/> ${item?.plan} </li>`
           )
           .join("")}
         </ul>
@@ -148,9 +152,12 @@ const displaySingleCardDetails = (singleTool) => {
           </ul>
           <ul class="list-disc list-inside">
             <h3 class="font-bold text-xl mb-4">Integrations</h3>
-            <li>Lorem ipsum dolor sit amet.</li>
-            <li>Lorem ipsum dolor sit amet.</li>
-            <li>Lorem ipsum dolor sit amet.</li>
+            ${integrations
+              .map(
+                (integration) =>
+                  `<li class="text-sm">${integration || "No data found"}</li>`
+              )
+              .join("")}
           </ul>
         </div>
 
@@ -158,13 +165,17 @@ const displaySingleCardDetails = (singleTool) => {
 
       <!-- div right -->
       <div class="card border-2 bg-base-100 flex-1">
-        <figure class="px-10 pt-10">
-          <img src="https://daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg" alt="Shoes" class="rounded-xl" />
+        <figure class="pt-5 px-5">
+          <img class="rounded-xl" src="${
+            image_link?.[0]
+          }" alt="Image not found" />
+          <button class="btn btn-sm btn-error text-white absolute right-7 top-7"> ${score || 'Not found'}% accuracy</button>
         </figure>
         <div class="card-body items-center text-center">
-          <h2 class="card-title">Hi, how are you doing today?</h2>
-          <button class="btn btn-error text-white"> 84% accuracy</button>
-          <p>If a dog chews shoes whose shoes does he choose?</p>
+          <h2 class="card-title">${
+            iOExamples[randomNumber]?.input || "Input not found"
+          }</h2>
+          <p>${iOExamples[randomNumber]?.output || "Output not found"}</p>
         </div>
       </div>
 
