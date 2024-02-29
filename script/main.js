@@ -1,17 +1,29 @@
-const loadData = async (isShow) => {
+const loadData = async (isShow, isSort) => {
   const url = "https://openapi.programming-hero.com/api/ai/tools";
   const response = await fetch(url);
   const data = await response.json();
   const tools = data.data.tools;
-  displayTools(tools, isShow);
+  displayTools(tools, isShow, isSort);
 };
 
-const displayTools = (tools, isShow) => {
-  // primarly show 6 card
-  if (!isShow) {
-    tools = tools.slice(0, 6);
-  }
+const displayTools = (tools, isShow, isSort) => {
   const cardsContainer = document.getElementById("cards_container");
+
+  // primarly show 6 card
+  !isShow && !isSort
+    ? (tools = tools.slice(0, 6))
+    : (cardsContainer.innerHTML = "");
+
+  // sort tools base on the date:
+  if (isSort) {
+    document.getElementById("show_more_div").classList.add("hidden");
+    cardsContainer.innerHTML = "";
+    tools = tools.sort((a, z) =>
+      a.published_in.split("/")[2] < z.published_in.split("/")[2] ? 1 : -1
+    );
+  }
+
+  // set tool to display in the ui:
   tools.forEach((tool) => {
     displayEachTool(tool, cardsContainer);
   });
@@ -59,8 +71,14 @@ const displayEachTool = (tool, cardsContainer) => {
 
 // show more click handelar:
 const showMoreClickHandelar = () => {
-  document.getElementById('show_more_div').classList.add('hidden')
+  document.getElementById("show_more_div").classList.add("hidden");
   isShow = true;
   loadData(isShow);
+};
+
+// sort by date button click handearl:
+const sortByDateClickHandelar = () => {
+  const isSort = true;
+  loadData(false, isSort);
 };
 loadData();
