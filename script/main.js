@@ -110,6 +110,8 @@ const setFeaturesItem = (features) => {
   }
   return result;
 };
+
+// display single card details:
 const displaySingleCardDetails = (singleTool) => {
   const {
     description,
@@ -169,7 +171,9 @@ const displaySingleCardDetails = (singleTool) => {
           <img class="rounded-xl" src="${
             image_link?.[0]
           }" alt="Image not found" />
-          <button class="btn btn-sm btn-error text-white absolute right-7 top-7"> ${score || 'Not found'}% accuracy</button>
+          <button class="btn btn-sm btn-error text-white absolute right-7 top-7"> ${
+            score || "Not found"
+          }% accuracy</button>
         </figure>
         <div class="card-body items-center text-center">
           <h2 class="card-title">${
