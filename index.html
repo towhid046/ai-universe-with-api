@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ai universe</title>
+    <!-- daisly ui and tailwind css cdn -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- font awesome link -->
+    <script
+      src="https://kit.fontawesome.com/2542675057.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <header class="container mx-auto px-4 space-y-5 my-8 text-center">
+      <h2 class="text-3xl font-bold">Ai Universe Hub</h2>
+      <button class="btn btn-error text-white font-semibold">
+        Sort by Date
+      </button>
+    </header>
+
+    <main class="container px-4 mx-auto">
+      <!-- cards section -->
+      <section
+        class=" py-8"
+      >
+        <!-- cards container -->
+        <div id="cards_container" class="grid gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-3"></div>
+      </section>
+    </main>
+
+    <footer></footer>
+
+    <!-- js link -->
+    <script src="/script/main.js"></script>
+  </body>
+</html>
