@@ -30,7 +30,7 @@ const displayTools = (tools, isShow, isSort) => {
 };
 
 const displayEachTool = (tool, cardsContainer) => {
-  const { name, image, published_in, features, links } = tool;
+  const { name, image, published_in, features, id, links } = tool;
 
   const div = document.createElement("div");
   div.classList = `card bg-base-100 border-2`;
@@ -41,14 +41,12 @@ const displayEachTool = (tool, cardsContainer) => {
   </figure>
   <div class="card-body items-start">
   <h2 class="text-2xl font-bold">Features</h2>
- 
     <ol 
       id="features_list_container" 
       class="mb-5 list-decimal list-inside"
       >
       ${features.map((feature) => `<li>${feature}</li>`).join("")}
     </ol>
-
       <div class="w-full flex justify-between border-t-2 pt-5 items-center">
         <div>
           <h3 class="font-bold text-3xl">${name}</h3>
@@ -57,8 +55,7 @@ const displayEachTool = (tool, cardsContainer) => {
           </span>
           <span>${published_in}</span>
         </div>
-        
-        <button class="btn border-none rounded-full bg-[#fef7f7]">
+        <button onclick="showDetailsClickHandelar('${id}'); show_modal.showModal()" class="btn border-none rounded-full bg-[#fef7f7]">
           <i class="fa-solid fa-arrow-right-long text-lg text-[#eb5757]"></i>
         </button>
       </div>
@@ -81,4 +78,99 @@ const sortByDateClickHandelar = () => {
   const isSort = true;
   loadData(false, isSort);
 };
+
+// show details click handelar:
+const showDetailsClickHandelar = async (id) => {
+  const url = `https://openapi.programming-hero.com/api/ai/tool/${id}`;
+  const res = await fetch(url);
+  const data = await res.json();
+  const singleTool = data.data;
+  displaySingleCardDetails(singleTool);
+};
+
+// set details pricing color:
+const setColorByIndex = (index) => {
+  if (index === 0) {
+    return "text-green-500";
+  }
+  if (index === 1) {
+    return "text-yellow-500";
+  }
+  if (index === 2) {
+    return "text-red-500";
+  }
+  return color;
+};
+
+// set features item:
+const setFeaturesItem = (features) => {
+  let result = "";
+  for (let feature in features) {
+    result += `<li>${features[feature].feature_name}</li>`;
+  }
+  return result;
+};
+const displaySingleCardDetails = (singleTool) => {
+  const {
+    description,
+    pricing,
+    features,
+    integrations,
+    image_link,
+    accuracy: { score, description: accuracyDeascription },
+  } = singleTool;
+
+  const modalContainer = document.getElementById("modal_content");
+
+  modalContainer.innerHTML = `
+    <!-- modal content start -->
+    <div class="pr-14 pl-14 pb-14 pt-5 rounded-xl flex-col lg:flex-row flex justify-between gap-6">
+      <!-- div left -->
+      <div class="border-red-400 border-2 p-6 rounded-xl flex-1 bg-[#fef6f6] space-y-4">
+        <h3 class="text-base font-bold">${description}</h3>
+        <ul class="flex items-center gap-4">
+        ${pricing
+          .map(
+            (item, index) =>
+              `<li class="bg-white ${setColorByIndex(
+                index
+              )} p-5 rounded-xl font-semibold text-base text-center"> ${
+                item?.price
+              } <br/> ${item?.plan} </li>`
+          )
+          .join("")}
+        </ul>
+
+        <div class="flex justify-between gap-6">
+          <ul class="list-disc list-inside">
+            <h3 class="font-bold text-xl mb-4">Features</h3>
+            ${setFeaturesItem(features)}
+          </ul>
+          <ul class="list-disc list-inside">
+            <h3 class="font-bold text-xl mb-4">Integrations</h3>
+            <li>Lorem ipsum dolor sit amet.</li>
+            <li>Lorem ipsum dolor sit amet.</li>
+            <li>Lorem ipsum dolor sit amet.</li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- div right -->
+      <div class="card border-2 bg-base-100 flex-1">
+        <figure class="px-10 pt-10">
+          <img src="https://daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg" alt="Shoes" class="rounded-xl" />
+        </figure>
+        <div class="card-body items-center text-center">
+          <h2 class="card-title">Hi, how are you doing today?</h2>
+          <button class="btn btn-error text-white"> 84% accuracy</button>
+          <p>If a dog chews shoes whose shoes does he choose?</p>
+        </div>
+      </div>
+
+    </div>
+    <!-- modal content end -->
+  `;
+};
+
 loadData();

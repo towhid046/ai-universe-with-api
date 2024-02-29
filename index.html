@@ -20,19 +20,51 @@
   <body>
     <header class="container mx-auto px-4 space-y-5 my-8 text-center">
       <h2 class="text-3xl font-bold">Ai Universe Hub</h2>
-      <button onclick="sortByDateClickHandelar()" class="btn btn-error text-white font-semibold">
+      <button
+        onclick="sortByDateClickHandelar()"
+        class="btn btn-error text-white font-semibold"
+      >
         Sort by Date
       </button>
     </header>
 
     <main class="container px-4 mx-auto">
       <!-- cards section -->
-      <section class=" py-8">
+      <section class="py-8">
         <!-- cards container -->
-        <div id="cards_container" class="grid gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-3"></div>
+        <div
+          id="cards_container"
+          class="grid gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+        ></div>
         <div id="show_more_div" class="py-5 text-center">
-          <button onclick="showMoreClickHandelar()" class="btn btn-success text-white">Show more</button>
+          <button
+            onclick="showMoreClickHandelar()"
+            class="btn btn-success text-white"
+          >
+            Show more
+          </button>
         </div>
+      </section>
+
+      <!-- modal section -->
+      <!-- You can open the modal using ID.showModal() method -->
+      <section id="">
+        <dialog id="show_modal" class="modal-scroll container mx-auto w-8/12 rounded-xl bg-white">
+          <div class=" ">
+            <form method="dialog" class="flex flex-row-reverse ">
+              <button
+                class="btn text-xl btn-circle btn-ghost relative  text-red-600  hover:bg-white"
+              >
+                ✕
+              </button>
+            </form>
+            <!-- modal content start -->
+            <div id="modal_content">
+
+            </div>
+            <!-- modal content end -->
+          </div>
+        </dialog>
       </section>
     </main>
 
